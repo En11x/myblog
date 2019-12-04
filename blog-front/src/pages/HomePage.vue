@@ -78,7 +78,7 @@ export default {
     background: rgba(255,255,255,.3);
     z-index: 9;
     .avatar img{
-        border-radius: 50%;
-    }
+		border-radius: 50%;
+	}
 }
 </style>
