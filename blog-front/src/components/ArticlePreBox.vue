@@ -27,11 +27,12 @@ export default {
 
 <style lang='less' scoped>
 .container {
-  width: 80%;
-  margin: 0 auto;
+    height: auto;
+    margin-bottom: 1.5em;
   .article-title {
     font-size: 16px;
     letter-spacing: 1px;
+    font-weight: bold;
   }
   .article-desc {
     font-size: 12px;

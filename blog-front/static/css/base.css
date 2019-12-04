@@ -345,3 +345,13 @@ display: none;
     align-items: center;
     justify-content: space-between;
 }
+
+/* 透明动画 */
+@keyframes opacity{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
