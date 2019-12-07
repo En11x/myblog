@@ -90,6 +90,8 @@
 			</div>
 
 			<Page />
+            <Comment />
+            <CommentList />
 		</div>
 	</div>
 </template>
@@ -97,6 +99,8 @@
 <script>
 import ArticlePreBox from '../components/ArticlePreBox.vue'
 import Page from '../components/Page.vue'
+import Comment from '../components/Comment.vue'
+import CommentList from '../components/CommentList.vue'
 export default {
 	name: 'Home',
 	data() {
@@ -106,7 +110,9 @@ export default {
 	},
 	components: {
 		ArticlePreBox,
-		Page
+        Page,
+        Comment,
+        CommentList
 	}
 }
 </script>
@@ -139,6 +145,7 @@ export default {
 						}
 						&::-webkit-input-placeholder {
                             text-align: center;
+                            opacity: 1;
 						}
                     }
                     img{
@@ -159,6 +166,9 @@ export default {
 					}
 					&::-webkit-input-placeholder {
                         text-align: center;
+                        opacity: 0;
+                        transition:all .5s;
+                        transition-delay: 1s;
 					}
 				}
 			}
