@@ -1,15 +1,29 @@
 <template>
   <div id="app">
-    <router-view/>
+    <div class="container">
+      <div class="container-box">
+        <HeadNav />
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import HeadNav from "./components/HeadNav";
 export default {
-  name: 'App'
-}
+  name: "App",
+  components: {
+    HeadNav
+  }
+};
 </script>
 
-<style>
-
+<style lang='less' scoped>
+.container {
+  .container-box {
+    background: #fff;
+    padding: 60px 120px;
+  }
+}
 </style>
