@@ -5,8 +5,6 @@
       <RightSideList />
     </div>
     <Page />
-    <Comment />
-    <CommentList />
   </div>
 </template>
 
@@ -15,8 +13,7 @@ import ArticleList from "../components/ArticleList";
 import RightSideList from "../components/RightSideList";
 
 import Page from "../components/Page.vue";
-import Comment from "../components/Comment.vue";
-import CommentList from "../components/CommentList.vue";
+
 export default {
   name: "Home",
   data() {
@@ -25,9 +22,7 @@ export default {
   components: {
     ArticleList,
     RightSideList,
-    Page,
-    Comment,
-    CommentList
+    Page
   },
   created() {}
 };

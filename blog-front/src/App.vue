@@ -3,7 +3,9 @@
     <div class="container">
       <div class="container-box">
         <HeadNav />
-        <router-view />
+        <transition appear enter-active-class="animated fadeIn" leave-active-class="animated faster fadeOutUp" mode="out-in">
+          <router-view />
+        </transition>
       </div>
     </div>
   </div>
@@ -23,7 +25,10 @@ export default {
 .container {
   .container-box {
     background: #fff;
-    padding: 60px 120px;
+    padding: 60px 0;
+    width: 70%;
+    margin: 0 auto;
+    max-width: 1140px;
   }
 }
 </style>

@@ -1,162 +1,105 @@
 <template>
-	<transition appear appear-active-class="animated fadeIn">
-		<div class="container">
-			<div class="about-box">
-				<h3>关于我</h3>
-				<div class="about-list">
-					<p>
-						<span>昵称:</span>
-						P
-						<i class="material-icons text-info">face</i>
-					</p>
-					<p>
-						<span>职位:</span>
-						前端攻城狮
-						<i class="material-icons text-warning">work</i>
-					</p>
-					<p>
-						<span>坐标:</span>
-						中国 • 武汉
-						<i class="material-icons text-success">place</i>
-					</p>
-					<p>
-						<span>爱好:</span>
-						basketball、money
-						<i class="material-icons text-danger">loyalty</i>
-					</p>
-					<p>
-						<span>Email:</span>
-						497421855@qq.com
-						<i class="material-icons text-primary">mail</i>
-					</p>
-				</div>
-			</div>
-			<div class="contact">
-				<a href="#" class="qq">
-					<svg
-						t="1575816599064"
-						class="icon"
-						viewBox="0 0 1024 1024"
-						version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						p-id="4376"
-						width="16"
-						height="16"
-					>
-						<path
-							d="M933.4461 643.862213c-18.783809-108.945271-97.673553-180.322925-97.673553-180.322925 11.268648-98.920964-30.055526-116.461455-30.055526-116.461455C797.015847 41.027415 533.382495 46.38647 527.847431 46.531779c-5.542226-0.145309-269.211395-5.504364-277.872658 300.5481 0 0-41.325198 17.539468-30.054503 116.461455 0 0-78.894861 71.377654-97.676623 180.322925 0 0-10.033517 184.082552 90.159416 22.543436 0 0 22.544459 61.344137 63.86761 116.455315 0 0-73.897034 25.061792-67.621097 90.164532 0 0-2.517333 72.618924 157.784606 67.62519 0 0 112.701828-8.756431 146.515958-56.350402l14.766308 0 0.26299 0 14.765285 0c33.809013 47.596018 146.513912 56.350402 146.513912 56.350402 160.26203 4.993734 157.781536-67.62519 157.781536-67.62519 6.238075-65.10274-67.620074-90.164532-67.620074-90.164532 41.324174-55.109132 63.86147-116.455315 63.86147-116.455315C943.437661 827.944765 933.4461 643.862213 933.4461 643.862213L933.4461 643.862213z"
-							p-id="4377"
-							fill="#2c2c2c"
-						/>
-					</svg>
-				</a>
-				<a href="#" class="wechat">
-					<svg
-						t="1575816743050"
-						class="icon"
-						viewBox="0 0 1024 1024"
-						version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						p-id="5307"
-						width="16"
-						height="16"
-					>
-						<path
-							d="M692.10173 348.2c-53.7-0.4-106.9 12.7-154.2 38.2-45.7 24.1-84.3 60.2-111.5 104.1-27.3 43.2-41.7 93.1-41.3 144.1 0.2 25.3 4.1 50.6 11.5 74.8h-33.5c-35.6-1.2-71.2-5.6-106.1-13.2l-20.6-3.7-126.1 65.2 34.5-107.9C48.50173 580.2 0.40173 497.7 0.00173 402.3c-0.2-55.3 16.9-109 48.7-154.2 33.5-48.3 79-87 132.2-111.9 57.2-27.6 120.1-41.5 183.6-40.9 56.8-0.2 113.1 11.3 165.3 33.5 49.8 20.8 94.6 52.2 131.2 91.9 33.9 36.2 56.8 81 66.6 129.5-11.2-1-23.3-2-35.5-2zM243.50173 339c12.1 0.8 24.1-2.9 33.5-10.5 9-8.4 13.8-20.2 13.2-32.5 0.6-12.3-4.3-24.1-13.2-32.5-9.1-8.4-21.2-12.7-33.5-11.9-13.4-0.2-26.5 4.1-37.2 11.9-10.1 7.2-16.2 18.9-16.2 31.2-1 13.3 5.2 26.2 16.2 33.9 11 7.1 24 10.8 37.2 10.4zM1024.00173 629.3c-0.4 41.1-12.7 81.4-35.4 115.6-25.1 35.6-56.1 66.8-91.9 91.9l28 91.9L824.30173 875h-5.4c-33.5 9.4-67.7 15.2-102.4 16.9-54.3 0.6-107.9-11.5-156.5-35.4-44.8-22-83.1-54.9-111.5-96-26.7-38.9-40.9-85.1-40.9-132.2-0.2-47.1 14-93.1 40.9-131.8 28.2-41.1 66.8-74.2 111.5-96 48.7-23.9 102.4-36 156.5-35.4 52.2-0.2 103.8 11.9 150.5 35.4 45.3 21.8 84.3 54.9 113.3 96 28.2 38.4 43.4 84.9 43.2 132.8h0.5zM498.80173 250.1c-14-0.6-27.6 3.7-38.9 11.9-11.1 7.2-17.5 19.5-16.9 32.5-0.4 13 6 25.5 16.9 32.5 11.1 8 24.5 12.1 38.2 11.9 12.1 1 24.1-2.7 33.5-10.5 8.2-9 12.5-20.6 11.9-32.5 1.6-12.7-2.9-25.1-11.9-34.1s-21.6-13.2-34.1-11.9h1.4v0.2z m117 334.6c11.9 0.8 23.6-3.3 32.5-11.1 7.4-6.4 11.7-15.6 11.9-25.3-0.4-9.7-4.7-18.9-11.9-25.3-9-7.8-20.6-11.7-32.5-11.1-9.3 0.4-17.9 4.3-24.3 11.1-6.8 6.6-10.9 15.8-11.1 25.3 0.2 9.5 4.1 18.7 11.1 25.3 6.4 6.8 15.1 10.7 24.3 11.1z m199.3 0c11.9 0.8 23.6-3.3 32.5-11.1 7.4-6.4 11.7-15.6 11.9-25.3-0.6-9.9-5.4-19.3-13.2-25.3-8.8-7.4-19.9-11.3-31.2-11.1-9.3 0.2-18.1 4.1-24.3 11.1-6.8 6.6-10.9 15.8-11.1 25.3 0.2 9.5 4.1 18.7 11.1 25.3 6.2 6.8 15 10.9 24.3 11.1z m0 0"
-							p-id="5308"
-							fill="#2c2c2c"
-						/>
-					</svg>
-				</a>
-				<a href="#" class="github">
-					<svg
-						t="1575816786301"
-						class="icon"
-						viewBox="0 0 1024 1024"
-						version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						p-id="6226"
-						width="16"
-						height="16"
-					>
-						<path
-							d="M512 12.64c-282.752 0-512 229.216-512 512 0 226.208 146.72 418.144 350.144 485.824 25.6 4.736 35.008-11.104 35.008-24.64 0-12.192-0.48-52.544-0.704-95.328-142.464 30.976-172.512-60.416-172.512-60.416-23.296-59.168-56.832-74.912-56.832-74.912-46.464-31.776 3.52-31.136 3.52-31.136 51.392 3.616 78.464 52.768 78.464 52.768 45.664 78.272 119.776 55.648 148.992 42.56 4.576-33.088 17.856-55.68 32.512-68.48-113.728-12.928-233.28-56.864-233.28-253.024 0-55.904 20-101.568 52.768-137.44-5.312-12.896-22.848-64.96 4.96-135.488 0 0 43.008-13.76 140.832 52.48 40.832-11.36 84.64-17.024 128.16-17.248 43.488 0.192 87.328 5.888 128.256 17.248 97.728-66.24 140.64-52.48 140.64-52.48 27.872 70.528 10.336 122.592 5.024 135.488 32.832 35.84 52.704 81.536 52.704 137.44 0 196.64-119.776 239.936-233.792 252.64 18.368 15.904 34.72 47.04 34.72 94.816 0 68.512-0.608 123.648-0.608 140.512 0 13.632 9.216 29.6 35.168 24.576 203.328-67.776 349.856-259.616 349.856-485.76 0-282.784-229.248-512-512-512z"
-							p-id="6227"
-							fill="#2c2c2c"
-						/>
-					</svg>
-				</a>
-			</div>
-		</div>
-	</transition>
+    <div class="container">
+      <div class="about-box">
+        <h3>关于我</h3>
+        <div class="about-list">
+          <p>
+            <span>昵称:</span>
+            P
+            <i class="material-icons text-info">face</i>
+          </p>
+          <p>
+            <span>职位:</span>
+            前端攻城狮
+            <i class="material-icons text-warning">work</i>
+          </p>
+          <p>
+            <span>坐标:</span>
+            中国 • 武汉
+            <i class="material-icons text-success">place</i>
+          </p>
+          <p>
+            <span>爱好:</span>
+            basketball、money
+            <i class="material-icons text-danger">loyalty</i>
+          </p>
+          <p>
+            <span>Email:</span>
+            497421855@qq.com
+            <i class="material-icons text-primary">mail</i>
+          </p>
+        </div>
+      </div>
+      <div class="contact"></div>
+    </div>
 </template>
 
 <script>
 export default {
-	name: 'AboutMe',
-	data() {
-		return {}
-	},
-	components: {}
-}
+  name: "AboutMe",
+  data() {
+    return {};
+  },
+  components: {}
+};
 </script>
 
 <style lang='less' scoped>
 .container {
-	width: 50%;
-	margin: 0 auto;
-	.about-box {
-		h3 {
-			color: #8e92a5;
-			font-size: 16px;
-			font-weight: normal;
-			margin: 30px 0;
-			line-height: 1.4em;
-			&::before {
-				content: '';
-				width: 12px;
-				height: 12px;
-				display: inline-block;
-				background-color: #dce8ec;
-				border: 3px solid #afcfff;
-				margin-right: 25px;
-				border-radius: 50%;
-				box-sizing: border-box;
-			}
-		}
-	}
-	.about-list {
-		padding-left: 30px;
-		margin-left: 5px;
-		border-left: 1px solid #ececec;
-		p {
-			cursor: pointer;
-			font-size: 0.9em;
-			color: #4b5363;
-			padding-bottom: 20px;
-			margin-bottom: 20px;
-			border-bottom: 1px solid #f3fafd;
-			span {
-				margin-right: 20px;
-				color: #d0c8be;
-			}
-			i {
-				font-size: 12px;
-				float: right;
-			}
-			&:hover {
-				color: #a0abe2;
-			}
-		}
-	}
-	.contact {
-		width: 30%;
-		margin: 0 auto;
-		display: flex;
-		justify-content: space-around;
-		a:hover {
-			opacity: 0.5;
-		}
-	}
+  width: 50%;
+  margin: 0 auto;
+  .about-box {
+    h3 {
+      color: #8e92a5;
+      font-size: 16px;
+      font-weight: normal;
+      margin: 30px 0;
+      line-height: 1.4em;
+      &::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        background-color: #dce8ec;
+        border: 3px solid #afcfff;
+        margin-right: 25px;
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+    }
+  }
+  .about-list {
+    padding-left: 30px;
+    margin-left: 5px;
+    border-left: 1px solid #ececec;
+    p {
+      cursor: pointer;
+      font-size: 0.9em;
+      color: #4b5363;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #f3fafd;
+      span {
+        margin-right: 20px;
+        color: #d0c8be;
+      }
+      i {
+        font-size: 12px;
+        float: right;
+      }
+      &:hover {
+        color: #a0abe2;
+      }
+    }
+  }
+  .contact {
+    width: 30%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    a:hover {
+      opacity: 0.5;
+    }
+  }
 }
 </style>

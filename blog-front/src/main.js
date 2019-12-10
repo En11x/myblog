@@ -4,6 +4,7 @@ import router from './router'
 import less from 'less'
 import '../static/css/base.css'
 import animate from "animate.css"
+import "font-awesome/css/font-awesome.css"
 
 Vue.config.productionTip = false
 
