@@ -1,14 +1,14 @@
 //已删除的文章
 <template>
 	<div class="article-deleted">
-		<p>回收站（共删除 12篇文章）</p>
+		<p>回收站（共删除 {{total}}篇文章）</p>
 		<div class="article-table-wrap">
 			<div class="table">
-				<el-table :data="tableData" border stripe style="width: 100%" size="mini">
+				<el-table :data="articleList" border stripe style="width: 100%" size="mini">
 					<el-table-column label="标题" show-overflow-tooltip min-width="200">
 						<template slot-scope="scope">
 							<div class="article-title">
-								<span>文章标题文章标题文章标题文章标题文章标题文章标题文章标题</span>
+								<span @click="details(scope.row)">{{ scope.row.title || '未填写标题'}}</span>
 							</div>
 						</template>
 					</el-table-column>
@@ -65,8 +65,9 @@ export default {
 	name: 'articleDeleted',
 	data() {
 		return {
-			pageSize: 10, //每页显示9条数据
-			tableData: [
+            pageSize: 10, //每页显示9条数据
+            total:11,
+			articleList: [
 				{
 					date: '2016-05-02',
 					name: '王小虎',
@@ -105,7 +106,10 @@ export default {
 			]
 		}
 	},
-	components: {}
+    components: {},
+    methods: {
+        
+    }
 }
 </script>
 

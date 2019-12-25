@@ -6,7 +6,7 @@
 				<img src="~ASSETS/images/avatar.jpg" alt="作者头像">
 			</div>
 			<el-menu
-				default-active="/admin"
+				:default-active="$route.path"
                 router
 				:collapse-transition="collapseMenu"
 				:style="{paddingLeft:collapseMenu?'0':'20px'}"

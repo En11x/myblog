@@ -83,8 +83,9 @@ export default {
         left 0
         bottom 0
         right 0px
-        z-index 1020
-        background-color rgba(0,0,0,0.1)
+        z-index 8888
+        background-color rgba(255,255,255,1)
+        
         .login-wrap
             position relative
             padding 20px

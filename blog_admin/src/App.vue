@@ -44,13 +44,17 @@ import mFooter from '@/components/footer/mFooter'
 import RightNav from '@/components/rightNav/RightNav'
 import leftMenu from '@/views/admin/leftMenu/leftMenu'
 import scroll from '@/mixins/scroll'
+
+import {
+    mapGetters
+} from 'vuex'
+
 export default {
 	name: 'App',
 	mixins: [scroll],
 	data() {
 		return {
-			showScrollToTop: false,
-			isAdminWrap: true, //显示博客后台管理页面
+            showScrollToTop: false,
 			lineData: [
 				{
 					height: '50%',
@@ -69,11 +73,18 @@ export default {
 				}
 			]
 		}
-	},
+    },
+    computed:{
+        ...mapGetters([
+            'isAdminWrap'
+        ])
+    },
 	mounted() {
 		document.title = '我的博客'
 		//监听页面scroll事件，就是滚动事件
-		window.addEventListener('scroll', this.scrollListener)
+        window.addEventListener('scroll', this.scrollListener)
+
+        
 	},
 	methods: {
 		scrollListener() {
