@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./lib/element/index.css">
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<div id="app">
+  <div class="form-wrap">
+    <el-tabs type="border-card">
+      <el-tab-pane  label="涉警人员信息" >
+        <el-form class="form" ref="D_ALARM_PERSON" :model="D_ALARM_PERSON" label-width="100px">
+
+          <el-form-item label="人员类别">
+            <el-select v-model="D_ALARM_PERSON.sylb" >
+              <el-option label="州内人员" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="涉警类别" >
+            <el-select v-model="D_ALARM_PERSON.sjlb" >
+              <el-option label="非正常人员死亡" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="人员角色">
+            <el-select v-model="D_ALARM_PERSON.sjrylb" >
+              <el-option label="非正常人员死亡" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="公民身份证号">
+            <el-input  v-model="D_ALARM_PERSON.gmsfhm"></el-input>
+          </el-form-item>
+
+          <el-form-item label="别名">
+            <el-input v-model="D_ALARM_PERSON.bmch"></el-input>
+          </el-form-item>
+
+          <el-form-item label="姓名">
+            <el-input v-model="D_ALARM_PERSON.xm"></el-input>
+          </el-form-item>
+
+          <el-form-item label="性别">
+            <el-select v-model="D_ALARM_PERSON.xb" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="出生日期">
+            <el-col :span="11">
+              <el-date-picker type="date" placeholder="选择日期" v-model="D_ALARM_PERSON.csrq" style="width: 100%;"></el-date-picker>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="民族">
+            <el-select v-model="D_ALARM_PERSON.mz" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="籍贯区县">
+            <el-select v-model="D_ALARM_PERSON.jgqx" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="证件类型">
+            <el-select v-model="D_ALARM_PERSON.zjlx" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="证件号码">
+            <el-input v-model="D_ALARM_PERSON.zjhm"></el-input>
+          </el-form-item>
+
+          <el-form-item label="联系电话">
+            <el-input v-model="D_ALARM_PERSON.lxdh"></el-input>
+          </el-form-item>
+
+          <el-form-item label="国籍">
+            <el-select v-model="D_ALARM_PERSON.gj" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="文化程度">
+            <el-select v-model="D_ALARM_PERSON.whcd" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="婚姻状况">
+            <el-select v-model="D_ALARM_PERSON.hyzk" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="身高">
+            <el-input v-model="D_ALARM_PERSON.sg"></el-input>厘米
+          </el-form-item>
+
+          <el-form-item label="兵役现状">
+            <el-select v-model="D_ALARM_PERSON.byzk" >
+              <el-option label="男" value="shanghai"></el-option>
+              <el-option label="女" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+
+          <el-form-item label="活动区域">
+            <el-select v-model="sizeForm.region" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="活动性质">
+            <el-checkbox-group v-model="sizeForm.type">
+              <el-checkbox-button label="美食/餐厅线上活动" name="type"></el-checkbox-button>
+              <el-checkbox-button label="地推活动" name="type"></el-checkbox-button>
+              <el-checkbox-button label="线下主题活动" name="type"></el-checkbox-button>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="特殊资源">
+            <el-radio-group v-model="sizeForm.resource" size="medium">
+              <el-radio border label="线上品牌商赞助"></el-radio>
+              <el-radio border label="线下场地免费"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+
+
+
+          <el-form-item >
+            <el-button type="primary" >立即创建</el-button>
+            <el-button>取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="配置管理">配置管理</el-tab-pane>
+      <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+      <el-tab-pane  label="定时任务补偿">定时任务补偿</el-tab-pane>
+    </el-tabs>
+  </div>
+  <div class="table-wrap"></div>
+
+</div>
+<script src="./lib/jquery.min.js"></script>
+<script src="./lib/vue.min.js"></script>
+<script src="./lib/element/index.js"></script>
+<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/index.js"></script>
+
+
+</body>
+</html>
