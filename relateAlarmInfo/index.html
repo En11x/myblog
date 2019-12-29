@@ -21,8 +21,9 @@
                 <el-form-item class='col-md-3' v-for="(item,index) in formInfo.formData"
                 :class="[item.className?item.className:'']"
                 :prop='item.key'
+                v-if="!(tabActiveName ==='person'&&!item.isShow)"
                 :label="item.label">
-                    <el-select v-if="item.type==='select'" v-model="formInfo.formModel[item.key]" >
+                    <el-select v-if="item.type==='select'" @change="changePersonType(item.key)" v-model="formInfo.formModel[item.key]" >
                       <el-option v-for='it in item.selectList'  :label="it.selectLabel" :value="it.value"></el-option>
                     </el-select>
     
@@ -33,12 +34,13 @@
                     <el-date-picker v-if="item.type==='date'" type="date" placeholder="选择日期" v-model="formInfo.formModel[item.key]" style='width:100%;'></el-date-picker>
                      
                     <div v-if="item.type === 'uploadImg' " class='img-wrap'>
-                        <div class='img-box'>
-                            <i class='el-icon-close' title='删除图片'></i>
-                            <img  src="../blog_admin/src/assets/images/user.jpg" alt="" width='200' height='200'></div>
+                        <div class='img-box' v-for="(item,index) in articlePhotoFiles">
+                            <i class='el-icon-close' @click="deleteImg(index,'article')" title='删除图片'></i>
+                            <img  :src="item.imgSrc" alt="" width='197' height='197'>
+                        </div>
                         <div class='upload'>
                             <i class='el-icon-plus'></i>
-                            <input type="file" class='file-input' title='上传文件'>
+                            <input type="file" class='file-input' ref='articlePhoto' multiple @change='selectImgs' title='上传文件'>
                         </div>
                     </div>
 
@@ -53,14 +55,14 @@
     
             </el-form>
             <div v-if="tabActiveName==='picture'" class='img-wrap picture'>
-                <div class='img-box'>
-                    <i class='el-icon-close' title='删除图片'></i>
-                    <img  src="../blog_admin/src/assets/images/user.jpg" alt="" width='200' height='200'>
-                    <el-input type='textarea' maxlengt=200 v-model='DAlarrmPictureObj.tpsm'  placeholder='图片说明'  resize=none></el-input>
+                <div class='img-box' v-for="(item,index) in DAlarrmPicture">
+                    <i class='el-icon-close' @click="deleteImg(index,'picture')" title='删除图片'></i>
+                    <img  :src="item.url" alt="" width='197' height='197'>
+                    <el-input type='textarea' maxlengt=200 v-model='item.tpsm'  placeholder='图片说明'  resize=none></el-input>
                 </div>
                 <div class='upload'>
                     <i class='el-icon-plus'></i>
-                    <input type="file" class='file-input' title='上传文件'>
+                    <input type="file" class='file-input' multiple @change='selectPictures' title='上传文件'>
                 </div>
             </div>
         </el-tab-pane>
@@ -75,15 +77,26 @@
         :prop="item.key"
         :label="item.label"
         >
-      </el-table-column>
+        <template slot-scope="scope" >
+            <div v-if="item.key === 'url'"> 
+                <img v-if="scope.row.url.length>0 " :src="scope.row.url[0]" width='50' height="50" alt="">
+                <img v-if="scope.row.url.length>=2" :src="scope.row.url[1]" width='50' height="50" alt="">
+                <span v-if="scope.row.url.length>2">....</span>
+            </div>
+            <div v-else>{{scope.row[item.key]}}</div>
+        </template>
+            
+        </el-table-column>
       <el-table-column label='操作' >
         <template slot-scope="scope">
             <el-button
               size="mini"
+              @click="handleEdit(scope.$index,scope.row)"
               >修改</el-button>
             <el-button
               size="mini"
               type="danger"
+              @click="handleDelete(scope.$index, scope.row)"
               >删除</el-button>
           </template>
       </el-table-column>

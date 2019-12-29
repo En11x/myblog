@@ -31,6 +31,7 @@ const vm = new Vue({
     },
 	data:{
         tabActiveName:'person',
+        formEditData:{},
         tabList:[
             {
                 name:'person',
@@ -64,10 +65,15 @@ const vm = new Vue({
                 key:'sylb',
                 label:'人员类别',
                 type:'select',
+                isShow:true,
                 selectList:[
                     {
                         selectLabel:'州内人员',
                         value:'1'
+                    },
+                    {
+                        selectLabel:'州外人员',
+                        value:'2'
                     }
                 ]
             },
@@ -76,6 +82,7 @@ const vm = new Vue({
                 label:'人员角色',
                 isTableHeader:true,
                 type:'select',
+                isShow:true,
                 selectList:[
                     {
                         selectLabel:'州内人员',
@@ -87,6 +94,7 @@ const vm = new Vue({
                 key:'sjlb',
                 label:'涉警类别',
                 type:'select',
+                isShow:true,
                 selectList:[
                     {
                         selectLabel:'州内人员',
@@ -98,12 +106,14 @@ const vm = new Vue({
             {
                 key:'bmch',
                 label:'别名',
+                isShow:true,
                 type:'input',
             },
             {
                 key:'xm',
                 label:'姓名',
                 type:'input',
+                isShow:true,
                 isTableHeader:true,
                 rule:[
                     { required: true, message: '请输入姓名', trigger: 'blur' },
@@ -114,6 +124,7 @@ const vm = new Vue({
                 key:'xb',
                 label:'性别',
                 type:'select',
+                isShow:true,
                 isTableHeader:true,
                 selectList:[
                     {
@@ -129,6 +140,7 @@ const vm = new Vue({
                 key:'gmsfhm',
                 label:'公民身份证号',
                 type:'input',
+                isShow:true,
                 isTableHeader:true,
                 rule:[
                     { required: true, message: '请输入身份证号', trigger: 'blur' },
@@ -144,6 +156,7 @@ const vm = new Vue({
                 label:'出生日期',
                 isTableHeader:true,
                 type:'date',
+                isShow:true,
                 rule:[
                     {type: 'date', required: true, message: '请选择出生日期', trigger: 'change' },
                 ]
@@ -152,6 +165,7 @@ const vm = new Vue({
                 key:'mz',
                 label:'民族',
                 type:'select',
+                isShow:true,
                 isTableHeader:true,
                 selectList:[
                     {
@@ -167,80 +181,94 @@ const vm = new Vue({
                 key:'jgqx',
                 label:'籍贯区县',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'zjlx',
                 label:'证件类型',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'zjhm',
                 label:'证件号码',
+                isShow:true,
                 type:'input',
             },
             {
                 key:'lxdh',
                 label:'联系电话',
+                isShow:true,
                 type:'input',
             },
             {
                 key:'gj',
                 label:'国籍',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'whcd',
                 label:'文化程度',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'hyzk',
                 label:'婚姻状况',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'sg',
                 label:'身高',
+                isShow:true,
                 type:'input',
             },
             {
                 key:'byzk',
                 label:'兵役现状',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'zjxy',
                 label:'宗教信仰',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'zzmm',
                 label:'政治面貌',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'fwcs',
                 label:'服务处所',
                 type:'input',
+                isShow:true,
             },
             {
                 key:'zylb',
                 label:'职业类别',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'hjqh',
                 label:'户籍区划',
                 type:'select',
+                isShow:true,
                 selectList:[
                     {
                         selectLabel:'州内人员',
@@ -255,11 +283,13 @@ const vm = new Vue({
                 key:'jwzrq',
                 label:'户籍责任区',
                 type:'input',
+                isShow:true,
             },
             {
                 key:'hjxz',
                 label:'户籍详址',
                 type:'input',
+                isShow:true,
                 className:'col-md-6',
                 rule:[
                     { required:true,message:'请输入户籍详址',trigger:'blur'},
@@ -270,18 +300,21 @@ const vm = new Vue({
                 key:'xzqh',
                 label:'现住区划',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'xzzrq',
                 label:'现住责任区',
                 type:'select',
+                isShow:true,
                 selectList:[]
             },
             {
                 key:'xzxz',
                 label:'现住详址',
                 type:'input',
+                isShow:true,
                 className:'col-md-6'
             },
             
@@ -289,10 +322,12 @@ const vm = new Vue({
                 key:'rylb',
                 label:'人员类别',
                 type:'input',
+                isShow:true,
             },
             {
                 key:'rybq',
                 label:'人员标签',
+                isShow:true,
                 type:'input',
             },
             
@@ -467,13 +502,20 @@ const vm = new Vue({
         DAlarmArticle:[],
         DAlarmArticleObj:{},
         articleFormRules:{},
+        
+        articlePhotoFiles:[],
 
         //图片
-        DAlarrmPicture:[],
-        DAlarrmPictureObj:{
-            tpsm:'',  //图片说明
-            url:'',  //图片地址
-        }
+        DAlarrmPicture:[{
+            tpsm:'sadasdasdas',
+            url:'../blog_admin/src/assets/images/user.jpg'
+        }],
+        // DAlarrmPictureObj:{
+        //     tpsm:'',  //图片说明
+        //     url:'',  //图片地址
+        // },
+        // pictureFiles:[],
+
     },
     methods: {
         //点击标签页handleClickTab
@@ -510,6 +552,26 @@ const vm = new Vue({
             }
             console.log(this.formInfo)
         },
+        changePersonType(type){
+            if(type==='sylb'){
+                //州内人员
+                this.personFormData.map(item=>{
+                    if(this.DAlarmPersonObj[type]==='1'){
+                        
+                        if(item.key === 'gmsfhm' || item.key === 'sylb'){
+                            item.isShow = true
+                        }else{
+                            item.isShow = false
+                        }
+                    }else{
+                        item.isShow = true
+                    } 
+                })
+                console.log(type,this.DAlarmPersonObj[type])
+            }
+
+            
+        },
         //表单保存之前验证
         beforeSaveForm(){
             let formName = this.formInfo.formRef
@@ -538,6 +600,22 @@ const vm = new Vue({
             console.log(this.$refs[formName])
             this.$refs[formName][0].resetFields();
         },
+        //修改表单数据
+        handleEdit(index,item){
+            if(this.tabActiveName === 'article'){
+                if(item.url.length){
+                    item.url.map(item=>{
+                        this.articlePhotoFiles.push({imgSrc:item})
+                    })
+                }
+            }
+            this.tableData.splice(index,1)
+            this.formInfo.formModel = item
+        },
+        //删除表单数据
+        handleDelete(index,item){
+            this.tableData.splice(index,1)
+        },
         //保存表单数据
         saveFormData(formName){
             // if(formName === 'personForm'){
@@ -548,9 +626,99 @@ const vm = new Vue({
             //     this.DAlarmPerson.push(obj);
             //     this.resetForm(formName)
             // }
+            if(formName === 'articleForm'){
+                //上传图片
+                let urlArr=[];
+                //应使用批量上传
+                this.articlePhotoFiles.map(item=>{
+                    // this.uploadImg(item.fileObj).then(data=>{
+                    //     urlArr.push(data.data.fileID)
+                    // }).catch(err=>{
+                    //     console.log(err)
+                    // })
+                    urlArr.push(item.imgSrc)
+                })
+                this.formInfo.formModel.url = urlArr
+                this.articlePhotoFiles = []
+            }
             let obj = JSON.parse(JSON.stringify(this.formInfo.formModel))
             this.tableData.push(obj)
+            console.log(this.tableData)
             this.resetForm(formName)
+        },
+        //选择图片
+        selectImgs(ele){
+            console.log(this.$refs.articlePhoto)
+            let imgArr = ele.target.files;
+            for(let i=0;i<imgArr.length;i++){
+                console.log(1111)
+                let imgTypeArr = imgArr[i].type.split('/');
+                let imgType = imgTypeArr[imgTypeArr.length-1];
+                if(this.isImg(imgType)){
+                    let json = {
+                        imgSrc:window.URL.createObjectURL(imgArr[i]),
+                        type:imgArr[i].type,
+                        fileObj:imgArr[i]
+                    }
+                    this.articlePhotoFiles.push(json)
+                }else{
+                    this.$message.error('请上传图片文件')
+                }
+                
+            }
+            ele.target.value = ''
+        },
+        //上传图片
+        uploadImg(fileObj){
+            let param = new FormData();
+            param.append('file',fileObj);
+            let configFile = {
+                headers:{'Content-Type':'multipart/form-data'}
+            } 
+            return this.$axios.post(baseURL + 'api/jp-TIFS-FileCenter-ms/file',param,configFile)
+        },
+        selectPictures(ele){
+            let imgArr = ele.target.files;
+            for(let i=0;i<imgArr.length;i++){
+                let imgTypeArr = imgArr[i].type.split('/');
+                let imgType = imgTypeArr[imgTypeArr.length-1];
+                if(this.isImg(imgType)){
+                    //上传图片
+                    this.uploadImg(imgArr[i]).then(data=>{
+                        let fileID = data.data.fileID
+                        let json ={
+                            tpsm:'',  //图片说明
+                            url:fileID,  //图片地址
+                        }
+                        this.DAlarrmPicture.push(json)
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+                       
+                }else{
+                    this.$message.error('请上传图片文件')
+                }
+                
+            }
+            ele.target.value = ''
+        },
+        //删除图片
+        deleteImg(index,type){
+            
+            if(type === 'article'){
+                //删除物品信息的图片
+                this.articlePhotoFiles.splice(index,1)
+            }else if(type==='picture'){
+                this.DAlarrmPicture.splice(index,1)
+            }
+        },
+        //验证是否为图片
+        isImg(type) {
+            if (type === "jpg" || type === "png" || type === "jpeg" ||
+            type === "gif") {
+            return true
+            }
+            return false;
         },
         //对象深拷贝
         deepCopy(obj){
@@ -560,6 +728,11 @@ const vm = new Vue({
                 newObj[i] = typeof obj[i] ==='object'?this.deepCopy(obj[i]):obj[i]
             }
             return newObj
+        }
+    },
+    watch: {
+        DAlarmPersonObj(v1){
+            console.log(v1.sylb,'=============')
         }
     }
 })
