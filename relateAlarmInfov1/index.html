@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./lib/element/index.css">
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<div id="app">
+  <div class="form-wrap" v-loading="loading">
+
+
+    <el-tabs type="border-card" v-model='tabActiveName' @tab-click="handleClick">
+        <el-tab-pane name="person" label="涉警人员信息">
+
+            <el-form class="form" ref="personForm" :model="DAlarmPersonObj" :rules="personFormRules" label-width="110px">
+
+                <el-form-item class='col-md-3' v-for="(item,index) in personFormData"
+                :class="[item.className?item.className:'']"
+                :prop='item.key'
+                v-if="!(tabActiveName ==='person'&&!item.isShow)"
+                :label="item.label">
+                    <el-select v-if="item.type==='select'" :filterable = "item.isSearch"  @change="changePersonType(item.key)" v-model="DAlarmPersonObj[item.key]" >
+                      <el-option v-for='it in item.selectList'  :label="it.item" :value="it.code"></el-option>
+                    </el-select>
+
+
+                    <el-input v-if="item.type==='input'"  v-model="DAlarmPersonObj[item.key]"></el-input> <span v-if="item.key === 'sg'" class="sg">厘米</span>
+
+                    <el-input type='textarea' v-if="item.type==='textarea'"  v-model="DAlarmPersonObj[item.key]"></el-input>
+
+                    <el-date-picker v-if="item.type==='date'" type="date" placeholder="选择日期" v-model="DAlarmPersonObj[item.key]" style='width:100%;'></el-date-picker>
+
+
+
+                  </el-form-item>
+
+
+              <el-form-item class='col-md-12'>
+                <el-button type="primary" @click="beforeSaveForm('personForm','DAlarmPersonObj')">立即保存</el-button>
+                <el-button @click="resetForm('personForm')">重置</el-button>
+              </el-form-item>
+
+
+            </el-form>
+
+
+
+
+        </el-tab-pane>
+
+
+
+        <el-tab-pane name="station" label="涉警单位信息">
+          <el-form class="form" ref="stationForm" :model="DAlarmStationObj" :rules="stationFormRules" label-width="110px">
+
+            <el-form-item class='col-md-3' v-for="(item,index) in stationFormData"
+                          :class="[item.className?item.className:'']"
+                          :prop='item.key'
+                          v-if="!(tabActiveName ==='person'&&!item.isShow)"
+                          :label="item.label">
+              <el-select v-if="item.type==='select'" :filterable = "item.isSearch"  @change="changePersonType(item.key)" v-model="DAlarmStationObj[item.key]" >
+                <el-option v-for='it in item.selectList'  :label="it.item" :value="it.code"></el-option>
+              </el-select>
+
+
+              <el-input v-if="item.type==='input'"  v-model="DAlarmStationObj[item.key]"></el-input>
+
+              <el-input type='textarea' v-if="item.type==='textarea'"  v-model="DAlarmStationObj[item.key]"></el-input>
+
+              <el-date-picker v-if="item.type==='date'" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期" v-model="DAlarmStationObj[item.key]" style='width:100%;'></el-date-picker>
+
+
+
+            </el-form-item>
+
+
+            <el-form-item class='col-md-12'>
+              <el-button type="primary" @click="beforeSaveForm('stationForm','DAlarmStationObj')">立即保存</el-button>
+              <el-button @click="resetForm('stationForm')">重置</el-button>
+            </el-form-item>
+
+
+          </el-form>
+        </el-tab-pane>
+
+
+        <el-tab-pane name="article" label="涉警物品信息">
+          <el-form class="form" ref="articleForm" :model="DAlarmArticleObj" :rules="articleFormRules" label-width="110px">
+
+            <el-form-item class='col-md-3' v-for="(item,index) in articleFormData"
+                          :class="[item.className?item.className:'']"
+                          :prop='item.key'
+                          v-if="!(tabActiveName ==='person'&&!item.isShow)"
+                          :label="item.label">
+              <el-select v-if="item.type==='select'" v-model="DAlarmArticleObj[item.key]" >
+                <el-option v-for='it in item.selectList'  :label="it.item" :value="it.code"></el-option>
+              </el-select>
+
+
+              <el-input v-if="item.type==='input'"  v-model="DAlarmArticleObj[item.key]"></el-input>
+
+              <el-input type='textarea' v-if="item.type==='textarea'" resize="none" v-model="DAlarmArticleObj[item.key]"></el-input>
+
+              <el-date-picker v-if="item.type==='date'" type="date" placeholder="选择日期" v-model="DAlarmArticleObj[item.key]" style='width:100%;'></el-date-picker>
+
+              <div v-if="item.type === 'uploadImg' " class='img-wrap'>
+                <div class='img-box' v-for="(item,index) in articlePhotoFiles">
+                  <i class='el-icon-close' @click="deleteImg(index,'article')" title='删除图片'></i>
+                  <img  :src="item.imgSrc" alt="" width='197' height='197'>
+                </div>
+                <div class='upload'>
+                  <i class='el-icon-plus'></i>
+                  <input type="file" class='file-input' ref='articlePhoto' multiple @change='selectImgs' title='上传文件'>
+                </div>
+              </div>
+
+            </el-form-item>
+
+
+            <el-form-item class='col-md-12'>
+              <el-button type="primary" @click="beforeSaveForm('articleForm','DAlarmArticleObj')">立即保存</el-button>
+              <el-button @click="resetForm('articleForm')">重置</el-button>
+            </el-form-item>
+
+
+          </el-form>
+
+        </el-tab-pane>
+        <el-tab-pane name="picture" label="涉警图片信息">
+          <div class='img-wrap picture'>
+            <div class='img-box' v-for="(item,index) in DAlarrmPicture">
+              <i class='el-icon-close' @click="deleteImg(index,'picture')" title='删除图片'></i>
+              <img  :src="item.url" alt="" width='197' height='197' >
+              <el-input type='textarea' maxlengt=200 v-model='item.tpsm'  placeholder='图片说明'  resize=none></el-input>
+            </div>
+            <div class='upload'>
+              <i class='el-icon-plus'></i>
+              <input type="file" class='file-input' multiple @change='selectPictures' title='上传文件'>
+            </div>
+          </div>
+        </el-tab-pane>
+    </el-tabs>
+
+  </div>
+
+  <div class="table-wrap" v-if="tabActiveName !== 'picture'">
+    <el-table stripe border :data='tableData' v-if='tableData.length'>
+        <el-table-column
+        v-for="(item,index) in formInfo"
+        v-if='item.isTableHeader'
+        :prop="item.key"
+        :label="item.label"
+        >
+        <template slot-scope="scope" >
+            <div v-if="item.key === 'url'">
+                <img v-if="scope.row.url.length>0 " :src="scope.row.url[0]" width='50' height="50" alt="">
+                <img v-if="scope.row.url.length>=2" :src="scope.row.url[1]" width='50' height="50" alt="">
+                <span v-if="scope.row.url.length>2">....</span>
+            </div>
+            <div v-else>{{[scope.row[item.key],item]|tableFilter}}</div>
+        </template>
+
+        </el-table-column>
+      <el-table-column label='操作' >
+        <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.$index,scope.row)"
+              >修改</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)"
+              >删除</el-button>
+          </template>
+      </el-table-column>
+    </el-table>
+
+  </div>
+
+  <div class="btn-bottom">
+    <el-button type="primary" @click="submitData">提交保存</el-button>
+  </div>
+
+</div>
+
+<script src="./lib/vue.min.js"></script>
+<script src="./lib/axios.min.js"></script>
+<script src="./lib/jquery.min.js"></script>
+<script src="./lib/element/index.js"></script>
+<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/index.js"></script>
+
+
+</body>
+</html>

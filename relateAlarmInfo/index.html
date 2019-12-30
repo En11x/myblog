@@ -10,29 +10,64 @@
 </head>
 <body>
 <div id="app">
-  <div class="form-wrap">
-    
+  <div class="form-wrap" v-loading="loading">
+
 
     <el-tabs type="border-card" v-model='tabActiveName' @tab-click="handleClick">
+        <el-tab-pane name="person" label="涉警人员信息">
+          <el-form class="form" :ref="formInfo.formRef" :model="personFormData" :rules="personFormRules" label-width="110px">
+
+            <el-form-item class='col-md-3' v-for="(item,index) in personFormData"
+                          :class="[item.className?item.className:'']"
+                          :prop='item.key'
+                          v-if="!(tabActiveName ==='person'&&!item.isShow)"
+                          :label="item.label">
+              <el-select v-if="item.type==='select'" :filterable = "item.isSearch"  @change="changePersonType(item.key)" v-model="DAlarmPersonObj[item.key]" >
+                <el-option v-for='it in item.selectList'  :label="it.item" :value="it.code"></el-option>
+              </el-select>
+
+
+              <el-input v-if="item.type==='input'"  v-model="DAlarmPersonObj[item.key]"></el-input>
+
+
+              <el-date-picker v-if="item.type==='date'" type="date" placeholder="选择日期" v-model="DAlarmPersonObj[item.key]" style='width:100%;'></el-date-picker>
+
+
+
+            </el-form-item>
+
+
+            <el-form-item class='col-md-12'>
+              <el-button type="primary" @click="beforeSaveForm">立即保存</el-button>
+              <el-button @click="resetForm">重置</el-button>
+            </el-form-item>
+
+
+          </el-form>
+        </el-tab-pane>
+
+
+
         <el-tab-pane v-for="(tab,index) in tabList" :name="tab.name" :label="tab.label">
-    
+
             <el-form class="form" v-if="tabActiveName=== tab.name && tabActiveName!=='picture'" :ref="formInfo.formRef" :model="formInfo.formModel" :rules="formInfo.formRules" label-width="110px">
-                
+
                 <el-form-item class='col-md-3' v-for="(item,index) in formInfo.formData"
                 :class="[item.className?item.className:'']"
                 :prop='item.key'
                 v-if="!(tabActiveName ==='person'&&!item.isShow)"
                 :label="item.label">
-                    <el-select v-if="item.type==='select'" @change="changePersonType(item.key)" v-model="formInfo.formModel[item.key]" >
-                      <el-option v-for='it in item.selectList'  :label="it.selectLabel" :value="it.value"></el-option>
+                    <el-select v-if="item.type==='select'" :filterable = "item.isSearch"  @change="changePersonType(item.key)" v-model="formInfo.formModel[item.key]" >
+                      <el-option v-for='it in item.selectList'  :label="it.item" :value="it.code"></el-option>
                     </el-select>
-    
+
+
                     <el-input v-if="item.type==='input'"  v-model="formInfo.formModel[item.key]"></el-input>
-                    
+
                     <el-input type='textarea' v-if="item.type==='textarea'"  v-model="formInfo.formModel[item.key]"></el-input>
-                
+
                     <el-date-picker v-if="item.type==='date'" type="date" placeholder="选择日期" v-model="formInfo.formModel[item.key]" style='width:100%;'></el-date-picker>
-                     
+
                     <div v-if="item.type === 'uploadImg' " class='img-wrap'>
                         <div class='img-box' v-for="(item,index) in articlePhotoFiles">
                             <i class='el-icon-close' @click="deleteImg(index,'article')" title='删除图片'></i>
@@ -45,19 +80,22 @@
                     </div>
 
                   </el-form-item>
-    
-    
+
+
               <el-form-item class='col-md-12'>
                 <el-button type="primary" @click="beforeSaveForm">立即保存</el-button>
                 <el-button @click="resetForm">重置</el-button>
               </el-form-item>
-    
-    
+
+
             </el-form>
+
+
+
             <div v-if="tabActiveName==='picture'" class='img-wrap picture'>
                 <div class='img-box' v-for="(item,index) in DAlarrmPicture">
                     <i class='el-icon-close' @click="deleteImg(index,'picture')" title='删除图片'></i>
-                    <img  :src="item.url" alt="" width='197' height='197'>
+                    <img  :src="item.url" alt="" width='197' height='197' >
                     <el-input type='textarea' maxlengt=200 v-model='item.tpsm'  placeholder='图片说明'  resize=none></el-input>
                 </div>
                 <div class='upload'>
@@ -78,14 +116,14 @@
         :label="item.label"
         >
         <template slot-scope="scope" >
-            <div v-if="item.key === 'url'"> 
+            <div v-if="item.key === 'url'">
                 <img v-if="scope.row.url.length>0 " :src="scope.row.url[0]" width='50' height="50" alt="">
                 <img v-if="scope.row.url.length>=2" :src="scope.row.url[1]" width='50' height="50" alt="">
                 <span v-if="scope.row.url.length>2">....</span>
             </div>
-            <div v-else>{{scope.row[item.key]}}</div>
+            <div v-else>{{[scope.row[item.key],item]|tableFilter}}</div>
         </template>
-            
+
         </el-table-column>
       <el-table-column label='操作' >
         <template slot-scope="scope">
@@ -104,9 +142,15 @@
 
   </div>
 
+  <div class="btn-bottom">
+    <el-button type="primary" @click="submitData">提交保存</el-button>
+  </div>
+
 </div>
-<script src="./lib/jquery.min.js"></script>
+
 <script src="./lib/vue.min.js"></script>
+<script src="./lib/axios.min.js"></script>
+<script src="./lib/jquery.min.js"></script>
 <script src="./lib/element/index.js"></script>
 <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="./js/index.js"></script>

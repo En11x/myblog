@@ -95,4 +95,11 @@
     text-align: center;
     margin-top:20px;
 }
-
+.sg{
+    position: absolute;
+    top: 0;
+    right: -35px;
+}
+.el-textarea textarea{
+    min-height: 120px !important;
+}

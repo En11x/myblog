@@ -11,25 +11,23 @@ const vm = new Vue({
 	},
 	created() {
 
-			this.personFormData.map(item=>{
-				this.$set(this.DAlarmPersonObj, item.key, '');
-				//匹配规则
-				if(item.rule){
-					this.personFormRules[item.key] = item.rule
-				}
-			})
+	    // 初始化人员表单数据
+      this.personFormData.map(item=>{
+          this.$set(this.DAlarmPersonObj, item.key, '');
+          //匹配规则
+          if(item.rule){
+              this.personFormRules[item.key] = item.rule
+          }
+      })
 
 			this.getAllDictionary().then(res=>{
 				this.allDictionary = res.data
 				//初始化人员表单验证规则及人员表单增加数据
 				this.personFormData.map(item=>{
-
-
 					//匹配字典项
 					if(item.dictionary){
 						item.selectList = this.allDictionary[item.dictionary]
 					}
-
 
 					//默认国籍
 					this.DAlarmPersonObj.gj = '156'
@@ -60,15 +58,14 @@ const vm = new Vue({
 	})
 
 		// this.handleClick({name:'person'})
-				this.loading = false
+
+          this.formInfo = this.personFormData
+          this.loading = false
 			})
 
 
 
 
-
-
-			console.log(this.formInfo.formModel,'111111111111111')
     },
 	data:{
         tabActiveName:'person',
@@ -78,10 +75,10 @@ const vm = new Vue({
 				allDictionary:{},
 
         tabList:[
-            // {
-            //     name:'person',
-            //     label:'涉警人员信息',
-            // },
+            {
+                name:'person',
+                label:'涉警人员信息',
+            },
             {
                 name:'station',
                 label:'涉警单位信息',
@@ -97,10 +94,7 @@ const vm = new Vue({
         ],
         //表单数据信息
         formInfo:{
-            formRef:'',
-            formModel:{},
-            formRules:{},
-            formData:[]
+
         },
         //表格数据
         tableData:[],
@@ -172,6 +166,9 @@ const vm = new Vue({
                 label:'别名',
                 isShow:true,
                 type:'input',
+                rule:[
+                    {max:50,message:'最多输入50字',trigger:"blur"}
+                ]
             },
             {
                 key:'xm',
@@ -181,7 +178,7 @@ const vm = new Vue({
                 isTableHeader:true,
                 rule:[
                     { required: true, message: '请输入姓名', trigger: 'blur' },
-                    { min:2, max:6, message: '长度在2-6个字符', trigger: 'blur' }
+                    { min:2, max:30, message: '长度在2-30个字符', trigger: 'blur' }
                 ]
             },
             {
@@ -265,12 +262,18 @@ const vm = new Vue({
                 label:'证件号码',
                 isShow:true,
                 type:'input',
+                rule:[
+                    {max:18,message:'最长18位',trigger:'blur'}
+                ]
             },
             {
                 key:'lxdh',
                 label:'联系电话',
                 isShow:true,
                 type:'input',
+                rule:[
+                    {pattern: /(^1[3|4|5|7|8|9]\d{9}$)|(^09\d{8}$)/,message:'请输入正确手机号'}
+                ]
             },
             {
                 key:'gj',
@@ -303,6 +306,9 @@ const vm = new Vue({
                 label:'身高',
                 isShow:true,
                 type:'input',
+                rule:[
+                    {pattern:/^([1,2][0-9]{2})$/,message:'请输入正确身高',trigger:'blur'}
+                ]
             },
             {
                 key:'byzk',
@@ -333,6 +339,11 @@ const vm = new Vue({
                 label:'服务处所',
                 type:'input',
                 isShow:true,
+                rule:[
+                    {
+                        max:150,message:'最长输入150字',trigger:'blur'
+                    }
+                ]
             },
             {
                 key:'zylb',
@@ -367,17 +378,7 @@ const vm = new Vue({
 							isSearch:true,
                 isShow:true,
             },
-            {
-                key:'hjxz',
-                label:'户籍详址',
-                type:'input',
-                isShow:true,
-                className:'col-md-6',
-                rule:[
-                    { required:true,message:'请输入户籍详址',trigger:'blur'},
-                    { max:5,message:'超过长度限制',trigger:'blur'}
-                ]
-            },
+
             {
                 key:'xzqh',
                 label:'现住区划',
@@ -397,24 +398,35 @@ const vm = new Vue({
                 selectList:[]
             },
             {
+                key:'hjxz',
+                label:'户籍详址',
+                type:'input',
+                isShow:true,
+                className:'col-md-6',
+                rule:[
+                    { required:true,message:'请输入户籍详址',trigger:'blur'},
+                    { max:100,message:'最多输入100字',trigger:'blur'}
+                ]
+            },
+            {
                 key:'xzxz',
                 label:'现住详址',
                 type:'input',
                 isShow:true,
-                className:'col-md-6'
-            },
-
-            {
-                key:'rylb',
-                label:'人员类别',
-                type:'input',
-                isShow:true,
+                className:'col-md-6',
+                rule:[
+                    {max:100,message:'最多输入100字',trigger:'blur'}
+                ]
             },
             {
                 key:'rybq',
                 label:'人员标签',
                 isShow:true,
                 type:'input',
+                className:'col-md-6',
+                rule:[{
+                    max:60,message:'最长输入60字',trigger:'blur'
+                }]
             },
 
         ],
@@ -422,7 +434,8 @@ const vm = new Vue({
         DAlarmPerson:[
         ],
         //人员表单验证
-        personFormRules:{},
+        personFormRules:{
+        },
         //添加的表单数据
         DAlarmPersonObj: {
 					// bmch: "",
@@ -578,6 +591,7 @@ const vm = new Vue({
                 key:'cdph',
                 label:'产地或品牌',
                 type:'input',
+                className:'col-md-6',
                 rule:[
                     {max:70,message:'最多输入70字',trigger:'blur'}
                 ]
@@ -646,44 +660,25 @@ const vm = new Vue({
     },
     methods: {
 
+	      // 点击tab页
+        handleClick(){
+            switch (this.tabActiveName) {
+                case "person":
+                    this.tableData = this.DAlarmPerson
+                    break
+                case "station":
+                    this.tableData = this.DAlarmStation
+                    break
+                case "article":
+                    this.tableData = this.DAlarmArticle
+                    break
+            }
+        },
 				//获取所有数据字典项
 				getAllDictionary(){
 					return  axios.post(this.baseUrl+'/api/jp-BSPA-PolSituInfo-ms/alarmsynthesize/dictionary/list',[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29])
 				},
-        //点击标签页handleClickTab
-        handleClick(tab){
-            if(tab.name ==='person'){
-                this.formInfo.formRef='personForm'
-                this.formInfo.formModel=this.DAlarmPersonObj
-                this.formInfo.formRules=this.personFormRules
-                this.formInfo.formData=this.personFormData
 
-                this.tableData = this.DAlarmPerson
-            }else if(tab.name === 'station'){
-                this.formInfo.formRef='stationForm'
-                this.formInfo.formModel=this.DAlarmStationObj
-                this.formInfo.formRules=this.stationFormRules
-                this.formInfo.formData=this.stationFormData
-
-                this.tableData = this.DAlarmStation
-            }else if(tab.name === 'article'){
-                this.formInfo.formRef='articleForm'
-                this.formInfo.formModel=this.DAlarmArticleObj
-                this.formInfo.formRules=this.articleFormRules
-                this.formInfo.formData=this.articleFormData
-
-                this.tableData = this.DAlarmArticle
-            }
-            else{
-                this.formInfo={
-                    formRef:'',
-                    formModel:{},
-                    formRules:{},
-                    formData:[]
-                }
-            }
-            console.log(this.formInfo)
-        },
         changePersonType(type){
             if(type==='rylx'){
                 //州内人员
@@ -704,21 +699,22 @@ const vm = new Vue({
 
 
         },
+
         //表单保存之前验证
-        beforeSaveForm(){
-            let formName = this.formInfo.formRef
+        beforeSaveForm(formName,formObj){
             //去除前后空格
-            for(var key in this.formInfo.formModel){
-                if(typeof this.formInfo.formModel[key] === "string"){
-                    this.formInfo.formModel[key] = this.formInfo.formModel[key].trim()
+            for(var key in this[formObj]){
+                if(typeof this[formObj][key] === "string"){
+                    this[formObj][key] = this[formObj][key].trim()
                 }
             }
             console.log(this.$refs[formName])
-            this.$refs[formName][0].validate((valid)=>{
+
+            this.$refs[formName].validate((valid)=>{
                 if(valid){
                     //验证成功
                     this.$message.error('成功');
-                    this.saveFormData(formName)
+                    this.saveFormData(formName,formObj)
                 }else{
                     console.log(valid)
                     this.$message.error('失败')
@@ -727,29 +723,34 @@ const vm = new Vue({
             })
         },
         //重置表单，重新输入
-        resetForm(){
-            let formName = this.formInfo.formRef
+        resetForm(formName){
             console.log(this.$refs[formName])
-            this.$refs[formName][0].resetFields();
+            this.$refs[formName].resetFields();
         },
         //修改表单数据
         handleEdit(index,item){
             if(this.tabActiveName === 'article'){
+                this.DAlarmArticleObj = item
                 if(item.url.length){
                     item.url.map(item=>{
                         this.articlePhotoFiles.push({imgSrc:item})
                     })
                 }
+            }else if(this.tabActiveName === 'person'){
+                this.DAlarmPersonObj = item
+            }else if(this.tabActiveName === 'station'){
+                this.DAlarmStationObj = item
             }
             this.tableData.splice(index,1)
-            this.formInfo.formModel = item
+            // console.log(this.formInfo,'2222222222')
+            // this.formInfo.formModel = item
         },
         //删除表单数据
         handleDelete(index,item){
             this.tableData.splice(index,1)
         },
         //保存表单数据
-        saveFormData(formName){
+        saveFormData(formName,formObj){
             // if(formName === 'personForm'){
 
             //     //保存人员表单
@@ -770,12 +771,11 @@ const vm = new Vue({
                     })
                     urlArr.push(item.imgSrc)
                 })
-                this.formInfo.formModel.url = urlArr
+                this.DAlarmArticleObj.url = urlArr
                 this.articlePhotoFiles = []
             }
-            let obj = JSON.parse(JSON.stringify(this.formInfo.formModel))
+            let obj = JSON.parse(JSON.stringify(this[formObj]))
             this.tableData.push(obj)
-            console.log(this.tableData)
             this.resetForm(formName)
         },
 				//提交所有表单数据
@@ -895,9 +895,20 @@ const vm = new Vue({
 				}
     },
     watch: {
-        DAlarmPersonObj(v1){
-            console.log(v1.sylb,'=============')
+        tabActiveName(v1){
+            switch (v1) {
+                case "person":
+                    this.formInfo = this.personFormData
+                    break
+                case "station":
+                    this.formInfo = this.stationFormData
+                    break
+                case "article":
+                    this.formInfo = this.articleFormData
+                    break
+            }
         }
+
     },
 	filters:{
 		tableFilter(val){
@@ -910,8 +921,6 @@ const vm = new Vue({
 				if(val[1].type === 'select'){
 					newValue = val[1].selectList.find(item=>item.code == val[0]).item
 					// newValue = that.allDictionary[23].find(item=>item.code===val[0]).item
-				}else if(val[1].type === 'date'){
-					newValue = that.transormDate(val[0])
 				}
 				else{
 					newValue = val[0]
